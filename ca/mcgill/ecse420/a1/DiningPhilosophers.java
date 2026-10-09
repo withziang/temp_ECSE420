@@ -15,12 +15,16 @@ public class DiningPhilosophers {
 		ReentrantLock[] chopsticks = new ReentrantLock[numberOfPhilosophers];
 
 		for (int i = 0; i < numberOfPhilosophers; i++) {
-			chopsticks[i] = new ReentrantLock();
+			// Fair lock
+			chopsticks[i] = new ReentrantLock(true);
 		}
 
 		ExecutorService executor = Executors.newFixedThreadPool(numberOfPhilosophers);
 		for (int i = 0; i < numberOfPhilosophers; i++) {
-			philosophers[i] = new Philosopher(i, chopsticks[i], chopsticks[(i + 1) % numberOfPhilosophers]);
+			int left = i;
+			int right = (i + 1) % numberOfPhilosophers;
+			philosophers[i] = new Philosopher(i, chopsticks[Math.min(left, right)],
+					chopsticks[Math.max(left, right)]);
 			executor.execute(philosophers[i]);
 		}
 		executor.shutdown();
@@ -29,13 +33,14 @@ public class DiningPhilosophers {
 	public static class Philosopher implements Runnable {
 
 		private final int id;
-		private final ReentrantLock leftChopstick;
-		private final ReentrantLock rightChopstick;
+		private final ReentrantLock firstChopstick;
+		private final ReentrantLock secondChopstick;
+		private int mealsEaten = 0;
 
-		public Philosopher(int id, ReentrantLock leftChopstick, ReentrantLock rightChopstick) {
+		public Philosopher(int id, ReentrantLock firstChopstick, ReentrantLock secondChopstick) {
 			this.id = id;
-			this.leftChopstick = leftChopstick;
-			this.rightChopstick = rightChopstick;
+			this.firstChopstick = firstChopstick;
+			this.secondChopstick = secondChopstick;
 		}
 
 		@Override
@@ -44,21 +49,22 @@ public class DiningPhilosophers {
 				while (true) {
 					doAction("is thinking");
 
-					leftChopstick.lock();
+					firstChopstick.lock();
 					try {
-						log("picked up left chopstick");
+						log("picked up first chopstick");
 
-						rightChopstick.lock();
+						secondChopstick.lock();
 						try {
-							log("picked up right chopstick");
-							doAction("is eating");
+							log("picked up second chopstick");
+							mealsEaten++;
+							doAction("is eating (meal " + mealsEaten + ")");
 						} finally {
-							rightChopstick.unlock();
-							log("put down right chopstick");
+							secondChopstick.unlock();
+							log("put down second chopstick");
 						}
 					} finally {
-						leftChopstick.unlock();
-						log("put down left chopstick");
+						firstChopstick.unlock();
+						log("put down first chopstick");
 					}
 				}
 			} catch (InterruptedException e) {
