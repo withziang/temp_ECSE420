@@ -1,0 +1,8 @@
+Question 1.4: 4000x4000 matrices, 8 available processors
+threads,time_ms,speedup
+1,36521.28,1.00
+2,28618.40,1.28
+4,18695.87,1.95
+8,17116.59,2.13
+16,16622.54,2.20
+32,16559.49,2.21

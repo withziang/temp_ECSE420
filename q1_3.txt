@@ -1,0 +1,3 @@
+Matrix size 2000x2000, 32 thread(s)
+  Sequential: 2391.37 ms
+  Parallel:   515.57 ms

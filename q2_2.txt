@@ -1,0 +1,7 @@
+Thread 1: acquired lock A
+Thread 1: waiting for lock B while holding lock A
+Thread 1: acquired lock B
+Thread 2: acquired lock A
+Thread 2: waiting for lock B while holding lock A
+Thread 2: acquired lock B
+Both threads finished.

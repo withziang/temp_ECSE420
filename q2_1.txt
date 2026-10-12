@@ -1,0 +1,8 @@
+Thread 2: acquired lock B
+Thread 1: acquired lock A
+Thread 2: waiting for lock A while holding lock B
+Thread 1: waiting for lock B while holding lock A
+DEADLOCK detected after 2000 ms:
+  Thread 1 is blocked on a lock owned by Thread 2
+  Thread 2 is blocked on a lock owned by Thread 1
+"Both threads finished." was never printed.

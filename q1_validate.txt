@@ -1,0 +1,16 @@
+PASS  2x2 hand-computed (sequential)
+PASS  2x2 hand-computed (parallel, 2 threads)
+PASS  2x3 * 3x2 hand-computed (sequential)
+PASS  2x3 * 3x2 hand-computed (parallel, 2 threads)
+PASS  M * I = M (sequential)
+PASS  M * I = M (parallel, 4 threads)
+PASS  M * 0 = 0 (sequential)
+PASS  M * 0 = 0 (parallel, 4 threads)
+PASS  301x200 * 200x157 gives a 301x157 result
+PASS  parallel (1 threads) equals sequential
+PASS  parallel (2 threads) equals sequential
+PASS  parallel (3 threads) equals sequential
+PASS  parallel (7 threads) equals sequential
+PASS  parallel (16 threads) equals sequential
+PASS  parallel (500 threads) equals sequential
+ALL CHECKS PASSED
