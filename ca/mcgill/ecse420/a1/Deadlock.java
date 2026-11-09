@@ -6,12 +6,7 @@ import java.lang.management.ThreadMXBean;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
-/**
- * Question 2: a program that demonstrates deadlock.
- * Thread 1 acquires lock A then lock B; thread 2 acquires lock B then lock A.
- * Each thread ends up holding one lock while waiting for the other, so the program hangs.
- * Run: java ca.mcgill.ecse420.a1.Deadlock   (stop it with Ctrl+C)
- */
+
 public class Deadlock {
  
   // How long each thread holds its first lock before requesting the second one (ms)
