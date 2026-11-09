@@ -118,10 +118,14 @@ public final class OvertakingTest {
    *
    * <p>This is an inversion count. Acquisitions are visited in decreasing request order, and a
    * Fenwick (binary indexed) tree over entry tickets counts how many of the later requests have
-   * already entered. It runs in O(N log N) for N acquisitions.
+   * already entered. It runs in O(N log N) for N acquisitions. Entry tickets must be exactly {@code
+   * 0..N-1}. Also used by {@link FilterLevelOvertakingTest} for each level.
+   *
+   * @param requestTickets when each acquisition started competing, indexed [thread][iteration]
+   * @param entryTickets when each acquisition got through, indexed [thread][iteration]
+   * @param overtakes receives the overtake count of each acquisition, indexed [thread][iteration]
    */
-  private static void countOvertakes(
-      long[][] requestTickets, long[][] entryTickets, long[][] overtakes) {
+  static void countOvertakes(long[][] requestTickets, long[][] entryTickets, long[][] overtakes) {
     int threadCount = requestTickets.length;
     int iterations = requestTickets[0].length;
     int total = threadCount * iterations;
